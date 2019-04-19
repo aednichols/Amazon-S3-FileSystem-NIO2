@@ -1,5 +1,6 @@
 package com.upplication.s3fs;
 
+import static com.upplication.s3fs.S3Channel.createTempFile;
 import static java.lang.String.format;
 
 import java.io.BufferedInputStream;
@@ -43,7 +44,7 @@ public class S3SeekableByteChannel implements SeekableByteChannel {
                 !this.options.contains(StandardOpenOption.CREATE))
             throw new NoSuchFileException(format("target not exists: %s", path));
 
-        tempFile = Files.createTempFile("temp-s3-", key.replaceAll("/", "_"));
+        tempFile = createTempFile(path);
         boolean removeTempFile = true;
         try {
             if (exists) {
